@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+
+	<link rel="stylesheet" href="jquery-ui.css">
+
+
+	<style>
+
+	body, html{overflow: hidden; height: 100%;}
+
+		body{background: url(interface/bg.png);}
+		*{padding:0; margin:0;}
+
+		::selection { background: transparent; } ::-moz-selection { background: transparent; }
+	
+		#console {z-index:9999999; position: absolute; top: 0; left: 0; width: 100%; height: 100vh; padding: 10px; background: #000000d4; text-align: bottom; color: #fff; text-shadow: 1px 1px black, -1px -1px black, 0px -1px black, -1px 0px black; display: none; -webkit-transition: all 1s ease; -moz-transition: all 1s ease; -ms-transition: all 1s ease; -o-transition: all 1s ease; transition: all 1s ease;}
+		.terminal{z-index:9999999; position: absolute; top: 0; left: 0; width: 100%; height: 100vh; background: #000000d4; text-align: bottom; color: #fff; text-shadow: 1px 1px black, -1px -1px black, 0px -1px black, -1px 0px black; display: none; }
+
+		table{
+			border-collapse: collapse;
+			border: 1px solid #000;
+		}
+
+		td{
+			width: 32px;
+			height: 32px;
+			max-width: 32px;
+			max-height: 32px;
+			border: 1px solid #000;
+			text-align: center;
+			vertical-align: center;
+			font-family: monospace;
+			font-size: 0px;
+			position: relative;
+		}
+
+		.pixel-index {
+			font-size: 10px;
+			display: inline-block;
+			position: absolute;
+			top: 2px;
+			right: 2px;
+			color: #999;
+			opacity: 0.0;
+		}
+
+
+		img{width: 32px; height: 32px; max-width: 32px; max-height: 32px;}
+
+		#gameCanvas {position: absolute; left: 50%; margin-left: -240px;}
+
+		.containerGame { min-width:176px; max-width: 176px; z-index:10000; position: absolute;}
+		
+		.containerGame .top{color: #8f8f8f; background: url(interface/containerTop.png) no-repeat; padding: 2px 8px; min-height: 15px; max-height: 15px; font-family: monospace; font-weight: bold; font-size: 10px; margin-bottom: -4px;}
+		.containerOrder {min-height: 65px;}
+		.containerOrder:after {position:absolute;  content: ""; bottom: 0; left:0; width: 100%; background: url(interface/containerBottom.png) no-repeat; min-height: 16px;}
+		.containerGame > .containerOrder > .content{position:absolute; min-width:176px; max-width:176px;  height: 50px; min-height: 50px; background: green url(interface/bg.png) repeat;  color:#afafaf; font-family: monospace;}
+		.containerGame > .containerOrder > .content:before{position:absolute; left:0; content: "" z-index: 1000; min-width:4px; max-width:4px; height: 100%; min-height: 100%; background: red url(interface/containerLeft.png) repeat;}
+		.containerGame > .containerOrder > .content:after{position:absolute; right:0; content: ""; z-index:10001; min-width:4px; max-width:4px; height: 100%; min-height: 100%; background: blue url(interface/containerRight.png) repeat;}
+
+		
+		.btn-fullatk {background: url(interface/btn-fullatk.png) no-repeat; height: 20px; width:20px; }
+		.btn-fullatk-act{background: url(interface/btn-fullatk-activated.png) no-repeat; height: 20px; width:20px;}
+
+		.btn-balancedatk {background: url(interface/btn-balancedatk.png) no-repeat; height: 20px; width:20px; }
+		.btn-balancedatk-act{background: url(interface/btn-balancedatk-activated.png) no-repeat; height: 20px; width:20px;}
+
+		.btn-fulldef {background: url(interface/btn-fulldef.png) no-repeat; height: 20px; width:20px; }
+		.btn-fulldef-act{background: url(interface/btn-fullatk-activated.png) no-repeat; height: 20px; width:20px;}
+
+		.btn-stand {background: url(interface/btn-stand.png) no-repeat; height: 20px; width:20px; }
+		.btn-stand-act{background: url(interface/btn-stand-activated.png) no-repeat; height: 20px; width:20px;}
+
+		.btn-follow {background: url(interface/btn-follow.png) no-repeat; height: 20px; width:20px; }
+		.btn-follow-act{background: url(interface/btn-follow-activated.png) no-repeat; height: 20px; width:20px;}
+
+		.btn-floor-down {background: url(interface/btn-floor-down.png) no-repeat; height: 20px; width:20px; }
+		.btn-floor-down-act{background: url(interface/btn-floor-down-activated.png) no-repeat; height: 20px; width:20px;}
+
+		.btn-floor-up {background: url(interface/btn-floor-down.png) no-repeat; height: 20px; width:20px; }
+		.btn-floor-up-act{background: url(interface/btn-floor-down-activated.png) no-repeat; height: 20px; width:20px;}
+		
+	</style>
+</head>
+<body>
+
+	<div id="console">terminal is loading...</div>
+
+	<div class="containerGame">
+		<div class="top">Teste</div>
+		<div class="containerOrder">
+			<div class="content">teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/></div>
+	</div>
+</div>
+
+	<div class="btn-stand"></div>
+	<div class="btn-balancedatk"></div>
+	<div class="btn-floor-down"></div>
+
+	<div id="gameCanvas"></div>
+	
+
+		<script type="text/javascript" src="jquery-3.3.1.min.js"></script>
+		<script src="jquery-ui.js"></script>
+
+		<script>
+		$(document).keyup(function(e){
+			if (e.key === "Escape") {
+					
+					
+					$("#console").toggle();
+
+				
+			}
+		});
+
+		$( ".containerGame" ).draggable({ handle: ".top" });
+
+
+		$(".btn-stand").on("click", function(){
+			$(this).toggleClass("btn-stand-act");
+		});
+
+		$(".btn-fullatk").on("click", function(){
+			$(this).toggleClass("btn-fullatk-act");
+		});
+
+		$(".btn-follow").on("click", function(){
+			$(this).toggleClass("btn-follow-act");
+		});
+
+		$(".btn-balancedatk").on("click", function(){
+			$(this).toggleClass("btn-balancedatk-act");
+		});
+
+		$(".btn-floor-down").mousedown(function(){
+			$(this).toggleClass("btn-floor-down-act");
+		});
+
+		$(".btn-floor-down").mouseup(function(){
+			$(this).removeClass("btn-floor-down-act");
+		});
+
+
+		const sqmArray = []
+		const gameWidth = 15
+		const gameHeight = 11
+
+		function start(){
+			creteGameSqmStructure()
+			renderGame()
+		}
+
+		function creteGameSqmStructure(){
+			const numberOfSqm = gameWidth * gameHeight
+
+			for (let i = 0; i < numberOfSqm; i++){
+				sqmArray[i] = 0
+			}
+		}
+
+		function renderGame(){
+			let html = '<table cellpadding=0 cellspacing=0>'
+
+			for (let row =0; row < gameHeight; row++){
+				html += '<tr>'
+
+				for (let column =0; column < gameWidth; column++){
+					const pixelIndex = column + (gameWidth * row)
+					const gameSqm = sqmArray[pixelIndex]
+
+					html += '<td>'
+					html += `<div class="pixel-index">id${pixelIndex}</div>`
+					html += `<img src="${gameSqm}.jpg">`
+					html += '</td>'
+				}
+
+				html += '</tr>'
+			}
+
+			html += '</table>'
+
+			document.querySelector('#gameCanvas').innerHTML = html
+		}
+
+		start()
+		
+	</script>
+	
+</body>
+</html>
