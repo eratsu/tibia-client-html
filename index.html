@@ -64,14 +64,12 @@
 
 		#gameCanvas {position: absolute; left: 50%; margin-left: -240px;}
 
-		.containerGame { min-width:176px; max-width: 176px; z-index:10000; position: absolute;}
+		.containerGame { min-width:176px; max-width: 176px; z-index:10000; position: absolute; height: auto}
 		
 		.containerGame .top{color: #8f8f8f; background: url(interface/containerTop.png) no-repeat; padding: 2px 8px; min-height: 15px; max-height: 15px; font-family: monospace; font-weight: bold; font-size: 10px; margin-bottom: -4px;}
-		.containerOrder {min-height: 65px;}
-		.containerOrder:after {position:absolute;  content: ""; bottom: 0; left:0; width: 100%; background: url(interface/containerBottom.png) no-repeat; min-height: 16px;}
-		.containerGame > .containerOrder > .content{position:absolute; min-width:176px; max-width:176px;  height: 50px; min-height: 50px; background: green url(interface/bg.png) repeat;  color:#afafaf; font-family: monospace;}
-		.containerGame > .containerOrder > .content:before{position:absolute; left:0; content: "" z-index: 1000; min-width:4px; max-width:4px; height: 100%; min-height: 100%; background: red url(interface/containerLeft.png) repeat;}
-		.containerGame > .containerOrder > .content:after{position:absolute; right:0; content: ""; z-index:10001; min-width:4px; max-width:4px; height: 100%; min-height: 100%; background: blue url(interface/containerRight.png) repeat;}
+		.containerGame .containerOrder {min-height: 65px;}
+		.containerGame > .containerOrder > .content:after {position:absolute;  content: ""; bottom: 0; left:0; width: 100%; background: url(interface/containerBottom.png) no-repeat; min-height: 16px;}
+		.containerGame > .containerOrder > .content{position:absolute; padding: 10px; min-width:176px; max-width:176px;  height: auto; min-height: 50px; background: green url(interface/containerBg.png) repeat-y;  color:#afafaf; font-family: monospace;}
 
 		
 		.btn-fullatk {background: url(interface/btn-fullatk.png) no-repeat; height: 20px; width:20px; }
@@ -105,8 +103,8 @@
 		<div class="top">Teste</div>
 		<div class="containerOrder">
 			<div class="content">teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/>teste<br/></div>
+		</div>
 	</div>
-</div>
 
 	<div class="btn-stand"></div>
 	<div class="btn-balancedatk"></div>
